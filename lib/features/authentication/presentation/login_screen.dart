@@ -222,27 +222,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const Gap(16),
-                  GestureDetector(
-                    child: WButton(
+                   WButton(
                       isDisabled: !isLoginDataValid,
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           print("We have a valid data");
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return const VerificationScreen();
+                              },
+                            ),
+                          );
                         }
                       },
                       text: 'Login',
                     ),
-                    onTap: (){
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return const VerificationScreen();
-                          },
-                        ),
-                      );
-                    },
-                  ),
+
                   const Gap(56),
                   const Row(
                     children: [
