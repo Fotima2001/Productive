@@ -227,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           print("We have a valid data");
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../assets/constants/colors.dart';
 
-class WButton extends StatelessWidget {
+class WButton extends StatefulWidget {
   final Function() onTap;
   final String text;
   final bool isDisabled;
@@ -30,40 +30,74 @@ class WButton extends StatelessWidget {
   });
 
   @override
+  State<WButton> createState() => _WButtonState();
+}
+
+class _WButtonState extends State<WButton> {
+  double width = double.maxFinite;
+  double height = 60;
+  double verticalMargin = 20;
+  double horizontalMargin = 20;
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (!isDisabled && !isLoading) {
-          onTap();
+        if (!widget.isDisabled && !widget.isLoading) {
+          widget.onTap();
         }
       },
-      child: Container(
+      onTapDown: (_) {
+        verticalMargin = 30;
+        height = 40;
+        horizontalMargin = 40;
+        setState(() {});
+      },
+      onTapUp: (_) {
+        verticalMargin = 20;
+        height = 60;
+        horizontalMargin = 20;
+        setState(() {});
+      },
+      onTapCancel: () {
+        verticalMargin = 20;
+        height = 60;
+        horizontalMargin = 20;
+        setState(() {});
+      },
+      child: AnimatedContainer(
+        margin: EdgeInsets.symmetric(
+          vertical: verticalMargin,
+          horizontal: horizontalMargin,
+        ),
+        width: width,
+        // width: width,
         height: height,
-        width: width ?? double.maxFinite,
+        duration: const Duration(milliseconds: 250),
         alignment: Alignment.center,
-        margin: margin ?? EdgeInsets.zero,
-        padding: padding ?? const EdgeInsets.symmetric(vertical: 15),
+        // margin: widget.margin ?? EdgeInsets.zero,
+        padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: isDisabled ? disabledButtonColor : buttonColor ?? wButtonColor,
+          color: widget.isDisabled ? disabledButtonColor : widget.buttonColor ?? wButtonColor,
         ),
         child: Builder(
           builder: (_) {
-            if (isLoading) {
+            if (widget.isLoading) {
               return const CupertinoActivityIndicator();
             }
-            if (child == null) {
+            if (widget.child == null) {
               return Text(
-                text,
-                style: style ??
+                widget.text,
+                style: widget.style ??
                     TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: isDisabled ? white.withOpacity(.3) : white,
+                      color: widget.isDisabled ? white.withOpacity(.3) : white,
                     ),
               );
             } else {
-              return child!;
+              return widget.child!;
             }
           },
         ),
