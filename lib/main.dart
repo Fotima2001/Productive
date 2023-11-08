@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'assets/theme/theme.dart';
-import 'features/authentication/presentation/login_screen.dart';
-import 'features/authentication/presentation/widgets/authenticated_user.dart';
+import 'features/authenticiation/presentation/login_screen.dart';
+import 'features/authenticiation/presentation/widgets/authenticated_user.dart';
 import 'features/home/home.dart';
 
 void main() {
@@ -28,8 +27,19 @@ class _AppState extends State<App> {
     title: 'Productive',
     theme: AppTheme.darkTheme(),
     navigatorKey: _navigatorKey,
-    home: AuthenticatedUser.maybeOf(context)?.user == null
-        ? const LoginScreen()
-        : const HomeScreen(),
+    onGenerateRoute: (settings) => MaterialPageRoute(
+      builder: (_) => const SizedBox(),
+    ),
+    home:  AuthenticatedUser(
+      child: Builder(builder: (context) {
+        print("Came here");
+
+        if (AuthenticatedUser.maybeOf(context)?.user == null) {
+          return const LoginScreen();
+        } else {
+          return const HomeScreen();
+        }
+      }),
+    ),
   );
 }

@@ -62,13 +62,13 @@ class _TabNavigatorState extends State<TabNavigator>
       initialRoute: TabNavigatorRoutes.root,
       onGenerateRoute: (routeSettings) {
         final routeBuilders =
-            _routeBuilders(context: context, settings: routeSettings);
+        _routeBuilders(context: context, settings: routeSettings);
 
         return CupertinoPageRoute<dynamic>(
           builder: (context) => routeBuilders.containsKey(routeSettings.name)
               ? routeBuilders[routeSettings.name]!(
-                  context,
-                )
+            context,
+          )
               : Container(),
         );
       },
@@ -84,16 +84,16 @@ PageRouteBuilder fade({required Widget page, RouteSettings? settings}) =>
       transitionDuration: const Duration(milliseconds: 200),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(
-        opacity: CurvedAnimation(
-          parent: animation,
-          curve: const Interval(
-            0,
-            1,
-            curve: Curves.linear,
+            opacity: CurvedAnimation(
+              parent: animation,
+              curve: const Interval(
+                0,
+                1,
+                curve: Curves.linear,
+              ),
+            ),
+            child: child,
           ),
-        ),
-        child: child,
-      ),
       settings: settings,
       pageBuilder: (context, animation, secondaryAnimation) => page,
     );

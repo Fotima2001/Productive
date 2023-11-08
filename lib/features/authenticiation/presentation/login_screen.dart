@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-import 'package:productive/core/widgets/w_button.dart';
-import 'package:productive/features/authentication/presentation/widgets/social_media_login_button.dart';
-import 'package:productive/features/authentication/presentation/widgets/verification.screen.dart';
+import 'package:productive/features/authenticiation/presentation/pages/forgot_password/forgot_password_page.dart';
+import 'package:productive/features/authenticiation/presentation/pages/verification/verification_page.dart';
+import 'package:productive/features/authenticiation/presentation/widgets/social_media_login_button.dart';
 
 import '../../../assets/constants/colors.dart';
 import '../../../assets/constants/icons.dart';
+import '../../../core/widgets/w_button.dart';
 import '../../../core/widgets/w_divider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -128,8 +129,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body:   GestureDetector(
+        resizeToAvoidBottomInset: false,
+        body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
             if (FocusScope.of(context).hasFocus) {
@@ -210,7 +211,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForgotPasswordPage(),
+                          ),
+                        );
+                      },
                       child: const Text(
                         'Forgot password?',
                         style: TextStyle(
@@ -222,24 +230,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const Gap(16),
-                   WButton(
-                      isDisabled: !isLoginDataValid,
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          print("We have a valid data");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return const VerificationScreen();
-                              },
-                            ),
-                          );
-                        }
-                      },
-                      text: 'Login',
-                    ),
-
+                  WButton(
+                    isDisabled: !isLoginDataValid,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const VerificationPage(),
+                        ),
+                      );
+                    },
+                    text: 'Login',
+                  ),
                   const Gap(56),
                   const Row(
                     children: [
@@ -275,7 +276,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-        ),
-    );
+        ));
   }
 }

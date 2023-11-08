@@ -13,11 +13,11 @@ class AuthenticatedUserEntity {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is AuthenticatedUserEntity &&
-      other.email == email &&
-      other.password == password &&
-      other.avatar == avatar;
+        other.email == email &&
+        other.password == password &&
+        other.avatar == avatar;
   }
 
   @override
