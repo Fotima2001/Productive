@@ -8,12 +8,13 @@ import 'package:productive/features/authenticiation/presentation/widgets/social_
 import '../../../assets/constants/colors.dart';
 import '../../../assets/constants/icons.dart';
 import '../../../core/widgets/w_button.dart';
+import '../../../core/widgets/w_cscale.dart';
 import '../../../core/widgets/w_divider.dart';
 
 class LoginScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(
-    builder: (_) => const LoginScreen(),
-  );
+        builder: (_) => const LoginScreen(),
+      );
 
   const LoginScreen({super.key});
 
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
         hintText: hintText,
         suffixIcon: suffixIcon,
         contentPadding:
-        const EdgeInsets.symmetric(horizontal: 12, vertical: 13.5),
+            const EdgeInsets.symmetric(horizontal: 12, vertical: 13.5),
         hintStyle: TextStyle(
           color: hintTextColor.withOpacity(.6),
           fontSize: 14,
@@ -129,108 +130,110 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            if (FocusScope.of(context).hasFocus) {
-              FocusScope.of(context).unfocus();
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  const Gap(67),
-                  SvgPicture.asset(AppIcons.logo),
-                  const Gap(44),
-                  TextFormField(
-                    style: textFieldContentStyle,
-                    cursorColor: cursorColor,
-                    focusNode: mailFocusNode,
-                    controller: mailTextEditingController,
-                    decoration: decoration(hintText: 'Email'),
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
-                    onEditingComplete: () {
-                      passwordFocusNode.requestFocus();
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Iltimos, mail kiriting!';
-                      } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                          .hasMatch(value)) {
-                        return 'Iltimos, yaroqli mail manzilini kiriting';
-                      }
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          if (FocusScope.of(context).hasFocus) {
+            FocusScope.of(context).unfocus();
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                const Gap(67),
+                SvgPicture.asset(AppIcons.logo),
+                const Gap(44),
+                TextFormField(
+                  style: textFieldContentStyle,
+                  cursorColor: cursorColor,
+                  focusNode: mailFocusNode,
+                  controller: mailTextEditingController,
+                  decoration: decoration(hintText: 'Email'),
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.emailAddress,
+                  onEditingComplete: () {
+                    passwordFocusNode.requestFocus();
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Iltimos, mail kiriting!';
+                    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(value)) {
+                      return 'Iltimos, yaroqli mail manzilini kiriting';
+                    }
 
-                      return null;
-                    },
-                  ),
-                  const Gap(16),
-                  TextFormField(
-                    style: textFieldContentStyle,
-                    cursorColor: cursorColor,
-                    focusNode: passwordFocusNode,
-                    controller: passwordTextEditingController,
-                    decoration: decoration(
-                      hintText: 'Password',
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isObscure = !isObscure;
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 13.5),
-                          child: SvgPicture.asset(
-                            isObscure ? AppIcons.eyeOff : AppIcons.eyeOn,
-                          ),
-                        ),
-                      ),
-                    ),
-                    onEditingComplete: () {
-                      // TODO: Login
-                    },
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: isObscure,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Iltimos, parolingizni kiriting!';
-                      } else if (value.length < 7) {
-                        return 'Parol eng kamida 8ta belgidan tashkil topgan bo\'lishi kerak';
-                      }
-
-                      return null;
-                    },
-                  ),
-                  const Gap(12),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
+                    return null;
+                  },
+                ),
+                const Gap(16),
+                TextFormField(
+                  style: textFieldContentStyle,
+                  cursorColor: cursorColor,
+                  focusNode: passwordFocusNode,
+                  controller: passwordTextEditingController,
+                  decoration: decoration(
+                    hintText: 'Password',
+                    suffixIcon: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ForgotPasswordPage(),
-                          ),
-                        );
+                        setState(() {
+                          isObscure = !isObscure;
+                        });
                       },
-                      child: const Text(
-                        'Forgot password?',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: textButtonColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 13.5),
+                        child: SvgPicture.asset(
+                          isObscure ? AppIcons.eyeOff : AppIcons.eyeOn,
                         ),
                       ),
                     ),
                   ),
-                  const Gap(16),
-                  WButton(
+                  onEditingComplete: () {
+                    // TODO: Login
+                  },
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: isObscure,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Iltimos, parolingizni kiriting!';
+                    } else if (value.length < 7) {
+                      return 'Parol eng kamida 8ta belgidan tashkil topgan bo\'lishi kerak';
+                    }
+                    return null;
+                  },
+                ),
+                const Gap(12),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Forgot password?',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: textButtonColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const Gap(16),
+                WFade(
+                  isDisable: true,
+                  onTap: () {},
+                  child: WButton(
                     isDisabled: !isLoginDataValid,
                     onTap: () {
                       Navigator.of(context).push(
@@ -241,41 +244,41 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     text: 'Login',
                   ),
-                  const Gap(56),
-                  const Row(
-                    children: [
-                      Expanded(child: WDivider()),
-                      Gap(6),
-                      Text(
-                        'OR',
-                        style: TextStyle(
-                          color: white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+                ),
+                const Gap(56),
+                const Row(
+                  children: [
+                    Expanded(child: WDivider()),
+                    Gap(6),
+                    Text(
+                      'OR',
+                      style: TextStyle(
+                        color: white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
                       ),
-                      Gap(5),
-                      Expanded(child: WDivider()),
-                    ],
-                  ),
-                  const Gap(24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.facebook),
-                      const Gap(32),
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.google),
-                      const Gap(32),
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.apple),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    Gap(5),
+                    Expanded(child: WDivider()),
+                  ],
+                ),
+                const Gap(24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SocialMediaLoginButton(
+                        onTap: () {}, icon: AppIcons.facebook),
+                    const Gap(32),
+                    SocialMediaLoginButton(onTap: () {}, icon: AppIcons.google),
+                    const Gap(32),
+                    SocialMediaLoginButton(onTap: () {}, icon: AppIcons.apple),
+                  ],
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
